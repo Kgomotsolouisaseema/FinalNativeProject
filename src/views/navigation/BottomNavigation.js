@@ -31,11 +31,11 @@ const BottomNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="LocalMall"
+        name="Account"
         component={HomeScreen}
         options={{
           tabBarIcon: ({color}) => (
-            <Icon name="local-mall" color={color} size={28} />
+            <Icon  name="account-circle" color={color} size={30} />
           ),
         }}
       />
@@ -55,7 +55,7 @@ const BottomNavigator = () => {
                 borderWidth: 2,
                 borderRadius: 30,
                 top: -25,
-                elevation: 5,
+                elevation: 5, //make it look at the top 
               }}>
               <Icon name="search" color={COLORS.primary} size={28} />
             </View>

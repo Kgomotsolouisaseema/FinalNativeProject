@@ -10,7 +10,8 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import COLORS from "./src/views/consts/Colors";
-import MenuScreen from "./src/views/screens/MenuScreen";
+// import MenuScreen from "./src/views/screens/MenuScreen";
+import CartScreen from "./src/views/screens/CartScreen";
 
 const Stack = createStackNavigator();
 
@@ -23,10 +24,10 @@ export default function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {/* <Stack.Screen name="BoardScreen" component={OnBoardScreen} /> */}
           <Stack.Screen name="Home" component={BottomNavigation} />
-          <Stack.Screen name="MenuScreen" component={MenuScreen} />
           <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
-        </Stack.Navigator>
+          <Stack.Screen name="CartScreen" component={CartScreen} />
 
+        </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );

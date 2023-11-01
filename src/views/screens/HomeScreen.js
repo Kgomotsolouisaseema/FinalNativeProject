@@ -1,4 +1,4 @@
-// import React, { useState } from 'react';
+import React , {useEffect ,useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -14,14 +14,12 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-
-import React , {useEffect ,useState} from 'react';
-import { db } from '../config/firebase';
-import {collection ,doc , getDoc , getDocs , setDoc} from "firebase/firestore"
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import COLORS from '../../views/consts/Colors';
-import Card from '../components/Card';
+import COLORS from "../consts/Colors"
+
+
+import { db } from '../config/firebase';
+import {addDoc, collection ,doc , getDoc , getDocs , setDoc} from "firebase/firestore"
 
 
 
@@ -29,121 +27,90 @@ const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
 const HomeScreen = ({navigation}) => {
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
-
-  const [filteredCategories, setFilteredCategories] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [foodCategories, setFoodCategories] = useState([]);
-
-   //FUNCTION TO HANDLE ADDING TO CART
-
-   const handleAddToCart = async (id ,user) => {
-    try {
-      const selectedItem = foodCategories.find((item) => item.id === id);
-
-      if (selectedItem) {
-        const userId = user.userId; // Replace 'userId' with the 
-        console.log("userId" , userId)
-        const cartItemRef = doc(collection(db, `users/${userId}/cartItems`), selectedItem.id);
-        await setDoc(cartItemRef, selectedItem);
-        setCartItems([...cartItems, selectedItem]); // Update local cart items state if needed
-        console.log("Item added to cart and Firestore successfully:", selectedItem);
-      } else {
-        console.log("Item not found.");
-      }
-    } catch (error) {
-      console.error("Error adding item to cart and Firestore:", error);
-    }
-  };
+  const [menuCards , setMenuCards]=useState(null);
+  console.log( "menu items", menuCards)
+  const [cart , setCart]=useState([]);
+  const [itemIndex , setItemIndex]=useState(1);
+ 
 
 
-  //FUCNTION  TO HANDLE CATEGORIES NAVIGATION AND DISPLAY 
-  // const handleBreakfastnav = ()=>{
-  //   console.log("Breafast Avatar Clicked ")
-  //   navigation.navigate("Breakfast")
-  //  }
-  
-   const handleLunchNav = ()=>{
-    console.log("Lunch Avatar Clicked ")
-    navigation.navigate("Lunch")
-   }
-  
-   const handleDessertNav = ()=>{
-    console.log("Dessert Avatar Clicked ")
-    navigation.navigate("Dessert")
-   }
-  
-   const handleDrinksNav = ()=>{
-    console.log("Drinks Avatar Clicked ")
-    navigation.navigate("Drinks")
-   }
+
+
+
+  const cartRef = collection(db , "cartItems")
+
+
+
+
+  // const addtocart = () =>{
+  //   console.log("add to cart @homeScreen clicked" , itemIndex);
+  //   // setCart([...cart , `item ${itemIndex}`]);
+  //   // setItemIndex(itemIndex + 1);
+  // }
 
 
   useEffect(() => {
-    const fetchFoodCategories = async () => {
+    const fecthMenuItems = async () => {
       try {
-        const categoriesSnapshot = await getDocs(collection(db, "Categories"));
-        const catergoriesData = categoriesSnapshot.docs.map((doc) => ({
+        const categoriesSnapshot = await getDocs(collection(db,"Menu"));
+        const menuItemsData = categoriesSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setFoodCategories(catergoriesData);
-        console.log( "text ",catergoriesData.title)
+        setMenuCards(menuItemsData);
       
-        setSelectedItems(catergoriesData);
-        
-
-        // console.log(foodCategories, "food categories");
+        console.log( "Menu items",menuItemsData );
       } catch (error) {
-        console.error("Error fetching food categories:", error);
+        console.error("Error fetching menuu Items:", error);
       }
     };
-    fetchFoodCategories();
+    fecthMenuItems();
   }, []);
 
-  // const handleFoodItemPress = async (foodItemId) => {
-  //   console.log("food item ", foodItemId);
-  //   try {
-  //     //CREATING REFERENCE TO SPECIFIC DOCUMENT IN MENU COLLECTION
-  //     const menuItemRef = doc(collection(db, "Menu"), foodItemId); //,foodItemId
-     
-  //     //FETCH DOCUMENT DATA
-  //     const docSnapshot = await getDoc(menuItemRef);
-  //     console.log(docSnapshot, "Snapshot");
-  //     if (docSnapshot.exists()) {
-  //       //IF DOCUMENT IS THERE, use docSnapShot.id TO ACCESS DOCUMENTS FIELD
-  //       const menuItemData = docSnapshot.data();
-
-  //       // console.log("Category Data:", menuItemData);
-  //       navigation.navigate("ItemDetails", { menuItemData });
-  //       // setSelectedItems(menuItemData)
-
-  //       //NOW YOU CAN USE THE foodItemData TO DISPLAY/PROCESS THE DOCUMENT
-  //     } else {
-  //       console.log("Document not found");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching menu item", error);
-  //   }
-  // };
 
 
 
 
-
-
-
+  //THIS IS THE SMALL CATEGORIES ON THE TOP OF THE MENU , BREAKFASTFAST , LUNCH ,DRINKS AND DESSERT
   const ListCategories = () => {
+    const [categories , setCategories]=useState([]);  //this should hold the whole menu items 
+    // console.log( "the whole menu " ,categories)
+    const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+    // console.log( "the selected category  " ,selectedCategoryIndex)
+
+
+    useEffect(() => {
+      const fetchFoodCategories = async () => {
+        try {
+          const categoriesSnapshot = await getDocs(collection(db, "Breakfast"));
+          const catergoriesData = categoriesSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setCategories(catergoriesData);
+        
+      
+  
+          // console.log( "food categories",categories );
+        } catch (error) {
+          console.error("Error fetching food categories:", error);
+        }
+      };
+      fetchFoodCategories();
+    }, []);
+
+
+    
     return (
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={style.categoriesListContainer}>
-        {foodCategories.map((category, index) => (
+        {categories.map((category, index) => (
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('MenuScreen' , category)}>
+            onPress={() => setSelectedCategoryIndex(index)}>
             <View
               style={{
                 backgroundColor:
@@ -152,15 +119,16 @@ const HomeScreen = ({navigation}) => {
                     : COLORS.secondary,
                 ...style.categoryBtn,
               }}>
+                {/* the view of the inner white part of the image at the category  */}
               <View style={style.categoryBtnImgCon}>
                 <Image
-                  source={category.image}
-                  style={{height: 35, width: 35, resizeMode: 'cover'}}
+                  source={category.Image}
+                  style={{height: 35, width: 35, resizeMode: 'cover' , borderRadius:"5px"}}
                 />
               </View>
               <Text
                 style={{
-                  fontSize: 14,
+                  fontSize: 10,
                   fontWeight: 'bold',
                   marginLeft: 10,
                   color:
@@ -168,16 +136,75 @@ const HomeScreen = ({navigation}) => {
                       ? COLORS.white
                       : COLORS.primary,
                 }}>
-                {category.title}
+                {category.Name}
               </Text>
             </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
+      
     );
   };
 
+  //THIS IS THE CARDS FOR ALL THE MENU ITEMS , WHEN YOU PRESS THE PARTICULAR ITEM , YOU CAN VIEW THE FULL CONTENT OF PICKED ITEM
+  const Card = ({navigation , menuCards}) => {
+   
+
+    return (
+      <TouchableHighlight
+        underlayColor={COLORS.white}
+        activeOpacity={0.9}
+        onPress={() => navigation.navigate('DetailsScreen', menuCards )}
+        style={{marginVertical:20  , }}>
+
+        <View style={style.card}>
+          <View style={{alignItems: 'center', top: -40}}>
+            <Image source={{uri: menuCards.Image}} style={{height: 120, width: 120}} />
+          </View>
+
+          <View style={{marginHorizontal: 20}}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{menuCards.Name}</Text>
+            <Text style={{fontSize: 14, color: COLORS.grey, marginTop: 2}}>
+              {menuCards.Intro}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              marginTop: 10,
+              marginHorizontal: 20,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+              R{menuCards.Price}
+            </Text>
+            <View style={style.addToCartBtnContainer}> 
+            {/*ADD TO CART ICON*/}
+            <TouchableOpacity style={style.addToCartBtn}
+            underlayColor={COLORS.primary}
+            onPress={async ()=> {
+              await addDoc (collection(db, "cartItems" ), {
+                productName: menuCards.Name, 
+                price : menuCards.Price,
+                image: menuCards.Image,
+                quantity: 1
+              })
+            }}
+            >
+            <Icon name="add" size={20} color={COLORS.white} />
+            </TouchableOpacity>
+            </View>
+
+          </View>
+        </View>
+      </TouchableHighlight>
+    );
+  };
+
+  
   return (
+    //this is the very top of the home screen .
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <View style={style.header}>
         <View>
@@ -188,7 +215,7 @@ const HomeScreen = ({navigation}) => {
             </Text>
           </View>
           <Text style={{marginTop: 5, fontSize: 22, color: COLORS.grey}}>
-            What would like to Chow on Today !!
+            What would you like to eat today !
           </Text>
         </View>
         <Image
@@ -214,15 +241,16 @@ const HomeScreen = ({navigation}) => {
         </View>
       </View>
       <View>
+        {/* the top menu items categories*/ }
         <ListCategories />
       </View>
-      <Card/>
-      {/* <FlatList
+      {/*These are the cards for each food */ }
+      <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={foods}
-        renderItem={({item}) => <Card food={item} />}
-      /> */}
+        data={menuCards}
+        renderItem={({item}) => <Card menuCards={item} navigation={navigation}/>}
+      />
     </SafeAreaView>
   );
 };
@@ -276,13 +304,18 @@ const style = StyleSheet.create({
   },
   card: {
     height: 220,
-    width: cardWidth,
+    width: 200,  //CardWidth not accessible
+    marginVertical: 25, 
     marginHorizontal: 10,
     marginBottom: 20,
     marginTop: 50,
     borderRadius: 15,
     elevation: 13,
     backgroundColor: COLORS.white,
+  },
+  addToCartBtnContainer:{
+    flex:1
+
   },
   addToCartBtn: {
     height: 30,
