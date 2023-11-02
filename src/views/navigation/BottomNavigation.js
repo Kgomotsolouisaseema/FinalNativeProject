@@ -6,6 +6,8 @@ import COLORS from '../../views/consts/Colors';
 import {View} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +34,7 @@ const BottomNavigator = () => {
       />
       <Tab.Screen
         name="Account"
-        component={HomeScreen}
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({color}) => (
             <Icon  name="account-circle" color={color} size={30} />
@@ -64,7 +66,7 @@ const BottomNavigator = () => {
       />
       <Tab.Screen
         name="Favorite"
-        component={HomeScreen}
+        component={FavoritesScreen}
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="favorite" color={color} size={28} />

@@ -16,37 +16,27 @@ import {
 } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from "../consts/Colors"
-
-
 import { db } from '../config/firebase';
 import {addDoc, collection ,doc , getDoc , getDocs , setDoc} from "firebase/firestore"
+import { useRoute } from '@react-navigation/native';
 
 
 
-const {width} = Dimensions.get('screen');
-const cardWidth = width / 2 - 20;
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation , user}) => {
+  // const route = useRoute();/
+
+  // const user = route;
+  console.log(user);
+  // const {width} = Dimensions.get('screen');
+  // const cardWidth = width / 2 - 20;
   const [menuCards , setMenuCards]=useState(null);
   console.log( "menu items", menuCards)
   const [cart , setCart]=useState([]);
   const [itemIndex , setItemIndex]=useState(1);
  
 
-
-
-
-
   const cartRef = collection(db , "cartItems")
-
-
-
-
-  // const addtocart = () =>{
-  //   console.log("add to cart @homeScreen clicked" , itemIndex);
-  //   // setCart([...cart , `item ${itemIndex}`]);
-  //   // setItemIndex(itemIndex + 1);
-  // }
 
 
   useEffect(() => {
@@ -220,6 +210,7 @@ const HomeScreen = ({navigation}) => {
         </View>
         <Image
           source={require('../assets/frontgirl.png')}
+          // source={{ uri: user.profilePicture }}
           style={{height: 50, width: 50, borderRadius: 25}}
         />
       </View>
@@ -255,7 +246,12 @@ const HomeScreen = ({navigation}) => {
   );
 };
 
+const {width} = Dimensions.get('screen');
+const cardWidth = width / 2 - 20;
+
 const style = StyleSheet.create({
+  
+
   header: {
     marginTop: 20,
     flexDirection: 'row',

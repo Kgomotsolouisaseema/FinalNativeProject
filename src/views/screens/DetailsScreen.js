@@ -24,6 +24,7 @@ const DetailsScreen = ({ route }) => {
   const [favItem, setFavItem] = useState([]);
   console.log("favitem array", favItem);
   const [isLiked, setIsLiked] = useState(false);
+  const [selectedQuantity , setSelectedQuantity]=useState(1);
 
   //function to toggel if favItem is in the state or not
 
@@ -41,7 +42,7 @@ const DetailsScreen = ({ route }) => {
     }
   };
 
-  //FUNCTIONS
+  //FUNCTION TO ADD ITEM TO CART AT DETAILS
 
   const addItemTocart = async () => {
     //validates if item has valid productName  and Price properties
@@ -52,7 +53,6 @@ const DetailsScreen = ({ route }) => {
         productName: item.Name,
         price: item.Price,
         image: item.Image,
-        quantity : item.quantity,
       });
       navigation.navigate("CartScreen", item);
       // }else{
@@ -62,6 +62,8 @@ const DetailsScreen = ({ route }) => {
       console.log("error with nav", error);
     }
   };
+
+ 
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>

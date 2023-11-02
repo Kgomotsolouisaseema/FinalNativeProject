@@ -10,8 +10,11 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import COLORS from "./src/views/consts/Colors";
-// import MenuScreen from "./src/views/screens/MenuScreen";
+import ProfileScreen from "./src/views/screens/ProfileScreen";
 import CartScreen from "./src/views/screens/CartScreen";
+
+import RegistrationScreen from "./src/views/screens/Registration Screen";
+import LoginScreen from "./src/views/screens/LoginScreen";
 
 const Stack = createStackNavigator();
 
@@ -21,11 +24,19 @@ export default function App() {
       <NavigationContainer>
 
         <StatusBar backgroundColor={COLORS.white} barStyle="dark-content" />
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {/* <Stack.Screen name="BoardScreen" component={OnBoardScreen} /> */}
+        <Stack.Navigator screenOptions={{ headerShown: true }}>
+       
+          <Stack.Screen name="BoardScreen" component={OnBoardScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} />
+          
+
           <Stack.Screen name="Home" component={BottomNavigation} />
           <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
           <Stack.Screen name="CartScreen" component={CartScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+         
+
 
         </Stack.Navigator>
       </NavigationContainer>
