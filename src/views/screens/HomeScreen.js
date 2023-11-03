@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from "../consts/Colors"
 import { db } from '../config/firebase';
 import {addDoc, collection ,doc , getDoc , getDocs , setDoc} from "firebase/firestore"
-import { useRoute } from '@react-navigation/native';
+// import { useRoute } from '@react-navigation/native';
 
 
 
