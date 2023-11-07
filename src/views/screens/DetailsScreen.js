@@ -66,7 +66,7 @@ const DetailsScreen = ({ route }) => {
  
 
   return (
-    <SafeAreaView style={{ backgroundColor: COLORS.white }}>
+    <SafeAreaView style={{ backgroundColor: COLORS.white, flex:1 }}>
       <View style={style.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Details</Text>
@@ -82,7 +82,9 @@ const DetailsScreen = ({ route }) => {
         >
           <Image source={item.Image} style={{ height: 220, width: 220 }} />
         </View>
-        <View style={style.details}>
+       
+      </ScrollView>
+      <View style={style.details}>
           <View
             style={{
               flexDirection: "row",
@@ -117,7 +119,6 @@ const DetailsScreen = ({ route }) => {
             <SecondaryButton title="Add To Cart" onPress={addItemTocart} />
           </View>
         </View>
-      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -137,7 +138,8 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
-    // position: "absolute"
+    // position: "absolute",
+    bottom: 0,
   },
   iconContainer: {
     backgroundColor: COLORS.white,

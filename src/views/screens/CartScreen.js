@@ -145,7 +145,9 @@ const CartScreen = () => {
   };
   
 
-
+const checkout =()=>{
+  console.log("checkoutscreen")
+}
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
@@ -170,7 +172,7 @@ const CartScreen = () => {
               <Text style={{ fontSize: 18, fontWeight: 'bold' }}> R{totalPrice.toFixed(2)}</Text>
             </View>
             <View style={{ marginHorizontal: 30 }}>
-              <PrimaryButton title="CHECKOUT" />
+              <PrimaryButton title="CHECKOUT" onPress={checkout} />
             </View>
           </View>
         )}
