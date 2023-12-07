@@ -12,13 +12,13 @@ const OnBoardScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-      <View style={{height: 400}}>
+      <View style={{height: 500}}>
         <Image
           style={{
             width: '100%',
             height: "70%",
             resizeMode: 'contain',
-            top: 80,
+            top: 90,
             borderRadius:"50px"
           }}
           source={require("../assets/LOGO.jpg")}
@@ -36,7 +36,7 @@ const OnBoardScreen = ({navigation}) => {
               textAlign: 'center',
               color: COLORS.grey,
             }}>
-            We help find best and Most Delicious Kota . 
+            We help you find the best and Most Delicious Kota . 
           </Text>
         </View>
         <View style={style.indicatorContainer}>

@@ -6,12 +6,14 @@ import COLORS from '../consts/Colors';
 import { PrimaryButton } from '../components/Button';
 import { collection ,  deleteDoc,  doc, getDocs ,  } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
 
 const CartScreen = () => {
   // const params = useRoute();
   // const item = params
   // console.log( "cartScreen item object",item)
+  
 
 
 
@@ -19,6 +21,7 @@ const CartScreen = () => {
   const [prices , setPrices]=useState([]);
   const [numericPrices , setNumericPrices]=useState([])
   const [totalPrice , setTotalPrice]=useState(0)
+  const navigation  = useNavigation();
 
 
   const cartRef = collection(db , "cartItems")
@@ -145,9 +148,6 @@ const CartScreen = () => {
   };
   
 
-const checkout =()=>{
-  console.log("checkoutscreen")
-}
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
@@ -172,7 +172,7 @@ const checkout =()=>{
               <Text style={{ fontSize: 18, fontWeight: 'bold' }}> R{totalPrice.toFixed(2)}</Text>
             </View>
             <View style={{ marginHorizontal: 30 }}>
-              <PrimaryButton title="CHECKOUT" onPress={checkout} />
+              <PrimaryButton title="CHECKOUT" onPress={()=>  navigation.navigate("Checkout",totalPrice) }  />
             </View>
           </View>
         )}

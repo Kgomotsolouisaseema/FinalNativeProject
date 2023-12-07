@@ -28,10 +28,11 @@ const HomeScreen = ({navigation , user}) => {
 
   // const user = route;
   console.log(user);
-  // const {width} = Dimensions.get('screen');
-  // const cardWidth = width / 2 - 20;
+  const {width} = Dimensions.get('window');
+  const cardWidth = width / 2 - 20;
+  console.log(cardWidth)
   const [menuCards , setMenuCards]=useState(null);
-  console.log( "menu items", menuCards)
+  // console.log( "menu items", menuCards)
   const [cart , setCart]=useState([]);
   const [itemIndex , setItemIndex]=useState(1);
  
@@ -299,8 +300,8 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    height: 220,
-    width: 200,  //CardWidth not accessible
+    height: 200,
+    width: cardWidth,  //CardWidth not accessible
     marginVertical: 25, 
     marginHorizontal: 10,
     marginBottom: 20,
