@@ -6,15 +6,10 @@ import COLORS from '../consts/Colors';
 import { PrimaryButton } from '../components/Button';
 import { collection ,  deleteDoc,  doc, getDocs ,  } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation,  } from '@react-navigation/native';
 
 
 const CartScreen = () => {
-  // const params = useRoute();
-  // const item = params
-  // console.log( "cartScreen item object",item)
-  
-
 
 
   const [menuCards , setMenuCards]=useState([]);

@@ -14,7 +14,7 @@ function MenuScreen() {
     <View>
       <Text>{name}</Text>
       <Text>{Price}</Text>
-      {/* <Text>{image}</Text> */}
+  
     </View>
   )
   console.log("menu" , Items)
