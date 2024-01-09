@@ -1,32 +1,46 @@
-import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-function OrderPreparing() {
+import React, { useState} from 'react';
+import { ActivityIndicator, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {  useRoute } from '@react-navigation/native';
+import COLORS from '../consts/Colors';
+
+function OrderPreparing({navigation}) {
+
+    const [price , setPrice]=useState(0)
+
+const params  = useRoute();
+const {totalPrice}= params.totalPrice || 0;
+console.log("price ", totalPrice)
+
   return (
+    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+
+   
    <View style={styles.container} >
-    <Text style={styles.header}> Oder Preparing </Text>
+    <Text style={styles.header}> Order Preparing </Text>
 
     {/*Order Confirmation Message*/ }
     <Text style={styles.confrimationText}>Your Order is being processed , Thank you </Text>
 
     {/*Order Details or Summary */}
     <View style={styles.orderDetails}>
-        <Text>Order Number: ABS123</Text>
-        <Text>Total Price : $XX.XX</Text>
+        <Text>Order Number: TINY001</Text>
+        <Text>Total Price : R 120.00</Text>
     </View>
 
     {/*Order Status Update */}
     <View style={styles.statusUpdate}>
-        <ActivityIndicator size="large" color="orange" />
-        <Text>We ARE Finalizing your Order .... </Text>
+        <ActivityIndicator size="large" color="#f93a6d" />
+        <Text>We are Finalizing your Order .... </Text>
     </View>
     {/*Further Action  */}
     <View style={styles.actionButtons}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigation.navigate("Home")}>
             <Text>Continue Shopping</Text>
         </TouchableOpacity>
     </View>
    </View>
+   </SafeAreaView>
   );
 }
 
@@ -34,7 +48,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     header: {
         fontSize: 24 , 

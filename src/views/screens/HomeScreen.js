@@ -24,13 +24,11 @@ import {addDoc, collection ,doc , getDoc , getDocs , setDoc} from "firebase/fire
 
 
 const HomeScreen = ({navigation , user}) => {
-  // const route = useRoute();/
 
-  // const user = route;
   console.log(user);
-  const {width} = Dimensions.get('window');
-  const cardWidth = width / 2 - 20;
-  console.log(cardWidth)
+  // const {width} = Dimensions.get('window');  //screen or window 
+  // const cardWidth = width / 2 - 20;
+  // console.log(cardWidth)
   const [menuCards , setMenuCards]=useState(null);
   // console.log( "menu items", menuCards)
   const [cart , setCart]=useState([]);
@@ -138,60 +136,116 @@ const HomeScreen = ({navigation , user}) => {
   };
 
   //THIS IS THE CARDS FOR ALL THE MENU ITEMS , WHEN YOU PRESS THE PARTICULAR ITEM , YOU CAN VIEW THE FULL CONTENT OF PICKED ITEM
-  const Card = ({navigation , menuCards}) => {
-   
+  // const Card = ({navigation , menuCards}) => {
+  //   return (
+  //     <TouchableHighlight
+  //       underlayColor={COLORS.white}
+  //       activeOpacity={0.9}
+  //       onPress={() => navigation.navigate('DetailsScreen', menuCards )}
+  //       style={{marginVertical:20  , }}
+  //       >
 
+  //       <View style={style.card}>
+  //         <View style={{alignItems: 'center',}}> {/*top: -40*/}
+  //           <Image source={{uri: menuCards.Image}} style={{height: 120, width: 120}} />
+  //         </View>
+
+  //         <View style={{marginHorizontal: 20}}>
+  //           <Text style={{fontSize: 18, fontWeight: 'bold'}}>{menuCards.Name}</Text>
+  //           <Text style={{fontSize: 14, color: COLORS.grey, marginTop: 2}}>
+  //             {menuCards.Intro}
+  //           </Text>
+  //         </View>
+
+  //         <View
+  //           style={{
+  //             marginTop: 10,
+  //             marginHorizontal: 20,
+  //             flexDirection: 'row',
+  //             justifyContent: 'space-between',
+  //           }}>
+  //           <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+  //             R{menuCards.Price}
+  //           </Text>
+  //           <View style={style.addToCartBtnContainer}> 
+  //           {/*ADD TO CART ICON*/}
+  //           <TouchableOpacity style={style.addToCartBtn}
+  //           underlayColor={COLORS.primary}
+  //           onPress={async ()=> {
+  //             await addDoc (collection(db, "cartItems" ), {
+  //               productName: menuCards.Name, 
+  //               price : menuCards.Price,
+  //               image: menuCards.Image,
+  //               quantity: 1
+  //             })
+  //           }}
+  //           >
+  //           <Icon name="add" size={20} color={COLORS.white} />
+  //           </TouchableOpacity>
+  //           </View>
+
+  //         </View>
+  //       </View>
+  //     </TouchableHighlight>
+  //   );
+  // };
+  const Card = ({ navigation, menuCards }) => {
     return (
       <TouchableHighlight
         underlayColor={COLORS.white}
         activeOpacity={0.9}
-        onPress={() => navigation.navigate('DetailsScreen', menuCards )}
-        style={{marginVertical:20  , }}>
-
+        onPress={() => navigation.navigate('DetailsScreen', menuCards)}
+        style={{ marginVertical: 20 }}
+      >
         <View style={style.card}>
-          <View style={{alignItems: 'center', top: -40}}>
-            <Image source={{uri: menuCards.Image}} style={{height: 120, width: 120}} />
-          </View>
-
-          <View style={{marginHorizontal: 20}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>{menuCards.Name}</Text>
-            <Text style={{fontSize: 14, color: COLORS.grey, marginTop: 2}}>
-              {menuCards.Intro}
-            </Text>
-          </View>
-
-          <View
-            style={{
-              marginTop: 10,
-              marginHorizontal: 20,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-              R{menuCards.Price}
-            </Text>
-            <View style={style.addToCartBtnContainer}> 
-            {/*ADD TO CART ICON*/}
-            <TouchableOpacity style={style.addToCartBtn}
-            underlayColor={COLORS.primary}
-            onPress={async ()=> {
-              await addDoc (collection(db, "cartItems" ), {
-                productName: menuCards.Name, 
-                price : menuCards.Price,
-                image: menuCards.Image,
-                quantity: 1
-              })
-            }}
-            >
-            <Icon name="add" size={20} color={COLORS.white} />
-            </TouchableOpacity>
+          {/* Image and content within card */}
+          <View style={{ alignItems: 'center' }}>
+            <Image source={{ uri: menuCards.Image }} style={style.cardImage} />
+            {/* Rest of your content */}
+            <View style={{ marginHorizontal: 20 }}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                {menuCards.Name}
+              </Text>
+              <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}>
+                {menuCards.Intro}
+              </Text>
             </View>
-
+  
+            <View
+              style={{
+                marginTop: 10,
+                marginHorizontal: 20,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                R{menuCards.Price}
+              </Text>
+              <View style={style.addToCartBtnContainer}>
+                {/* ADD TO CART ICON */}
+                <TouchableOpacity
+                  style={style.addToCartBtn}
+                  underlayColor={COLORS.primary}
+                  onPress={async () => {
+                    await addDoc(collection(db, 'cartItems'), {
+                      productName: menuCards.Name,
+                      price: menuCards.Price,
+                      image: menuCards.Image,
+                      quantity: 1,
+                    });
+                  }}
+                >
+                  <Icon name="add" size={20} color={COLORS.white} />
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
         </View>
       </TouchableHighlight>
     );
   };
+  
 
   
   return (
@@ -246,8 +300,7 @@ const HomeScreen = ({navigation , user}) => {
     </SafeAreaView>
   );
 };
-
-const {width} = Dimensions.get('screen');
+const {width} = Dimensions.get('window'); //specifies the type of window opened , different from screen
 const cardWidth = width / 2 - 20;
 
 const style = StyleSheet.create({
@@ -300,15 +353,28 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    height: 200,
+    height: 300,
     width: cardWidth,  //CardWidth not accessible
     marginVertical: 25, 
     marginHorizontal: 10,
     marginBottom: 20,
     marginTop: 50,
-    borderRadius: 15,
-    elevation: 13,
+    borderRadius: 18,
+    padding:16 ,
     backgroundColor: COLORS.white,
+    elevation: 10, // Set the elevation for the card
+    shadowColor: 'red', // Set shadow color if needed
+    shadowOffset: { width: 0, height: 10 }, // Set shadow offset
+    shadowOpacity: 0.3, // Set shadow opacity
+    shadowRadius: 2, // Set shadow radius
+    borderwidth: 5, // border
+    borderColor: "black",
+  },
+  cardImage: {
+    height: 120,
+    width: 120,
+    borderRadius: 10, // Assuming you want rounded corners for the image
+    marginBottom: 10, // Adjust as needed
   },
   addToCartBtnContainer:{
     flex:1
