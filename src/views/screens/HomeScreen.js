@@ -247,7 +247,6 @@ const HomeScreen = ({navigation , user}) => {
   );
 };
 
-const {width} = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
 const style = StyleSheet.create({
