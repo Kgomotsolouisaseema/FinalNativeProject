@@ -6,12 +6,14 @@ import COLORS from '../../views/consts/Colors';
 import {View} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import CartScreen from '../screens/CartScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
 
 const Tab = createBottomTabNavigator();
 
 const BottomNavigator = () => {
   return (
-    <Tab.Navigator
+    <Tab.Navigator screenOptions={{ headerShown: false}}
       tabBarOptions={{
         style: {
           height: 55,
@@ -31,11 +33,11 @@ const BottomNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="LocalMall"
-        component={HomeScreen}
+        name="Account"
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({color}) => (
-            <Icon name="local-mall" color={color} size={28} />
+            <Icon  name="account-circle" color={color} size={30} />
           ),
         }}
       />
@@ -55,7 +57,7 @@ const BottomNavigator = () => {
                 borderWidth: 2,
                 borderRadius: 30,
                 top: -25,
-                elevation: 5,
+                elevation: 5, //make it look at the top 
               }}>
               <Icon name="search" color={COLORS.primary} size={28} />
             </View>
@@ -64,7 +66,7 @@ const BottomNavigator = () => {
       />
       <Tab.Screen
         name="Favorite"
-        component={HomeScreen}
+        component={FavoritesScreen}
         options={{
           tabBarIcon: ({color}) => (
             <Icon name="favorite" color={color} size={28} />
