@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import "react-native-gesture-handler";
-import HomeScreen from "./src/views/screens/HomeScreen";
+// import { Platform } from "react-native";
 import OnBoardScreen from "./src/views/screens/OnBoardScreen";
 import DetailsScreen from "./src/views/screens/DetailsScreen";
 import BottomNavigation from "./src/views/navigation/BottomNavigation"
@@ -15,11 +15,12 @@ import CartScreen from "./src/views/screens/CartScreen";
 import RegistrationScreen from "./src/views/screens/Registration Screen";
 import LoginScreen from "./src/views/screens/LoginScreen";
 // import {StripeProvider} from "@stripe/stripe-react-native"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import PaymentDetails from "./src/views/screens/PaymentDetails";
 import OrderPreparing from "./src/views/screens/OrderPreparing";
 import OrderSummary from "./src/views/screens/OrderSummary";
+
 
 
 const Stack = createStackNavigator();
@@ -48,16 +49,13 @@ export default function App() {
         <StatusBar backgroundColor={COLORS.white} barStyle="dark-content" />
         <Stack.Navigator screenOptions={{ headerShown: false}}>
        
-          {/* <Stack.Screen name="BoardScreen" component={OnBoardScreen} /> */}
-          {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
-          {/* <Stack.Screen name="Registration" component={RegistrationScreen} /> */}
-          
-
+          <Stack.Screen name="BoardScreen" component={OnBoardScreen} /> 
+          <Stack.Screen name="Login" component={LoginScreen} /> 
+          <Stack.Screen name="Registration" component={RegistrationScreen} /> 
           <Stack.Screen name="Home" component={BottomNavigation}  />
           <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
           <Stack.Screen name="CartScreen" component={CartScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
-          
           <Stack.Screen name="Orders" component={OrderSummary} />
           <Stack.Screen name="OrderPreparing" component={OrderPreparing} />
           <Stack.Screen name="PaymentDetails" component={PaymentDetails} />

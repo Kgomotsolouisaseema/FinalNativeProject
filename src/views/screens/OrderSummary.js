@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
@@ -67,10 +68,10 @@ function OrderSummary({ menuCards }) {
   const payment = async () => {
     try {
       // Sending request to server on render.com
-      const response = await fetch("https://tinys-7lwb.onrender.com", {
+      const response = await fetch("https://tinys-7lwb.onrender.com/pay", {
         method: "POST",
         body: JSON.stringify({
-          
+          name,
           amount: Math.floor(totalPrice * 100),
         }),
         headers: {

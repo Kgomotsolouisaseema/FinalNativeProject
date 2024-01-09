@@ -16,8 +16,8 @@ import { getAuth , onAuthStateChanged } from "firebase/auth";
 import COLORS from "../consts/Colors";
 import { PrimaryButton } from "../components/Button";
 
-const ProfileScreen = () => {
-  const { width } = Dimensions.get("screen");
+const ProfileScreen = ({navigation}) => {
+  const { width } = Dimensions.get("window");
   const cardWidth = width / 2 - 20;
 
   const [user, setUser] = useState(null);
@@ -65,9 +65,16 @@ const ProfileScreen = () => {
   }
 
   //HANDLE LOGOUT LOGIC 
-  const handleLogout = ()=>{
-    console.log("logout btn clicked ")
-  }
+  const handleLogout = async () => {
+    try {
+      await auth.signOut(); // Sign the user out
+      // Redirect the user to the onboarding screen
+      navigation.navigate('Onboarding');
+      console.log("User logged out successfully");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
