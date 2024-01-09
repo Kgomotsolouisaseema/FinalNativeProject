@@ -9,8 +9,6 @@ import COLORS from '../../views/consts/Colors';
 
 function Card({food}) {
 
-const {width} = Dimensions.get('screen');
-const cardWidth = width / 2 - 20;
 
 if (food){
     return (
@@ -52,6 +50,10 @@ if (food){
 
 
 export default Card;
+
+const {width} = Dimensions.get('screen');
+const cardWidth = width / 2 - 20;
+
 
 const style = StyleSheet.create({
     header: {
@@ -102,7 +104,7 @@ const style = StyleSheet.create({
     },
     card: {
       height: 220,
-      width: 200,
+      width: cardWidth,
       marginHorizontal: 10,
       marginBottom: 20,
       marginTop: 50,

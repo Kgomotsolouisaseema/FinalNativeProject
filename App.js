@@ -12,12 +12,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import COLORS from "./src/views/consts/Colors";
 import ProfileScreen from "./src/views/screens/ProfileScreen";
 import CartScreen from "./src/views/screens/CartScreen";
-
 import RegistrationScreen from "./src/views/screens/Registration Screen";
 import LoginScreen from "./src/views/screens/LoginScreen";
 // import {StripeProvider} from "@stripe/stripe-react-native"
 import { useState } from "react";
-import CheckoutScreen from "./src/views/screens/CheckoutScreen";
+
 import PaymentDetails from "./src/views/screens/PaymentDetails";
 import OrderPreparing from "./src/views/screens/OrderPreparing";
 import OrderSummary from "./src/views/screens/OrderSummary";
@@ -58,10 +57,12 @@ export default function App() {
           <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
           <Stack.Screen name="CartScreen" component={CartScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="Checkout" component={CheckoutScreen} />
+          
+          <Stack.Screen name="Orders" component={OrderSummary} />
+          <Stack.Screen name="OrderPreparing" component={OrderPreparing} />
           <Stack.Screen name="PaymentDetails" component={PaymentDetails} />
-          <Stack.Screen name="OrderSummary " component={OrderSummary} />
-          <Stack.Screen name="OrderPrparing" component={OrderPreparing} />
+         
+         
 
 
 
