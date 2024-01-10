@@ -14,7 +14,7 @@ import ProfileScreen from "./src/views/screens/ProfileScreen";
 import CartScreen from "./src/views/screens/CartScreen";
 import RegistrationScreen from "./src/views/screens/Registration Screen";
 import LoginScreen from "./src/views/screens/LoginScreen";
-// import {StripeProvider} from "@stripe/stripe-react-native"
+import {StripeProvider} from "@stripe/stripe-react-native"
 import { useState, useEffect } from "react";
 
 import PaymentDetails from "./src/views/screens/PaymentDetails";
@@ -26,23 +26,23 @@ import OrderSummary from "./src/views/screens/OrderSummary";
 const Stack = createStackNavigator();
 
 export default function App() {
-  // const [publishableKey ,setPublishableKey]= useState("pk_test_51O0f2IBysAdpfRXoy04bJHWZ6m9Ef9ff0VHCgIGqePMBoYE5tJcUjGF8AwMZ1oSkgEGzhwJZnoZFngp7e4RFgzek00sM1nXSqU");
+  const [publishableKey ,setPublishableKey]= useState("pk_test_51O0f2IBysAdpfRXoy04bJHWZ6m9Ef9ff0VHCgIGqePMBoYE5tJcUjGF8AwMZ1oSkgEGzhwJZnoZFngp7e4RFgzek00sM1nXSqU");
 
-  // const fetchPublishableKey = async () => {
-  //   const key = await fetchKey(); // fetch key from your server here
-  //   setPublishableKey(key);
-  // };
+  const fetchPublishableKey = async () => {
+    const key = await fetchKey(); // fetch key from your server here
+    setPublishableKey(key);
+  };
 
-  // useEffect(() => {
-  //   fetchPublishableKey();
-  // }, []);
+  useEffect(() => {
+    fetchPublishableKey();
+  }, []);
 
 
   
   return (
-    // <StripeProvider
-    // publishableKey="pk_test_51O0f2IBysAdpfRXoy04bJHWZ6m9Ef9ff0VHCgIGqePMBoYE5tJcUjGF8AwMZ1oSkgEGzhwJZnoZFngp7e4RFgzek00sM1nXSqU"
-    // >
+    <StripeProvider
+    publishableKey="pk_test_51O0f2IBysAdpfRXoy04bJHWZ6m9Ef9ff0VHCgIGqePMBoYE5tJcUjGF8AwMZ1oSkgEGzhwJZnoZFngp7e4RFgzek00sM1nXSqU"
+    >
     <SafeAreaProvider>
       <NavigationContainer>
 
@@ -68,7 +68,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
-    // </StripeProvider>
+     </StripeProvider>
   );
 }
 

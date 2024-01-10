@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, ScrollViewBase } from "react-native";
 import COLORS from "../consts/Colors";
 import {doc , setDoc} from "firebase/firestore"
 import {auth , db}from "../config/firebase"
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {useNavigation} from "@react-navigation/native"
+import { ScrollView } from "react-native-gesture-handler";
 
 
 const RegistrationScreen = () => {
@@ -56,6 +57,9 @@ const RegistrationScreen = () => {
    }
 
   return (
+    <ScrollView>
+
+   
     <View style={styles.container}>
       <Text style={styles.heading}>Register Here:</Text>
       <TextInput
@@ -112,6 +116,7 @@ const RegistrationScreen = () => {
         <Text style={styles.buttonText}>REGISTER</Text>
       </TouchableOpacity>
     </View>
+    </ScrollView>
   );
 };
 

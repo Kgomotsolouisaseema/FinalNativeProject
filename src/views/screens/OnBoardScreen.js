@@ -19,7 +19,7 @@ const OnBoardScreen = ({navigation}) => {
             height: "70%",
             resizeMode: 'contain',
             top: 90,
-            borderRadius:"50px"
+            borderRadius:50,
           }}
           source={require("../assets/LOGO.jpg")}
         />

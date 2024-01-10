@@ -23,7 +23,7 @@ function OrderSummary({ menuCards }) {
   const [cvC, setCvcNum] = useState();
 
   const params  = useRoute();
-  const {totalPrice}= params.params || 0;
+  const totalPrice= params.params || 0;
   console.log("price ", totalPrice)
 
   useEffect(() => {
@@ -66,6 +66,7 @@ function OrderSummary({ menuCards }) {
 //     }
 // }
   const payment = async () => {
+    //  navigation.navigate("OrderPreparing" , {totalPrice: totalPrice});
     try {
       // Sending request to server on render.com
       const response = await fetch("https://tinys-7lwb.onrender.com/pay", {
@@ -90,7 +91,7 @@ function OrderSummary({ menuCards }) {
       });
       if (presentSheet.error) return Alert.alert(presentSheet.error.message);
       Alert.alert("Payment complete, thank you!");
-      navigation.navigate("OrderPreparing");
+      // navigation.navigate("OrderPreparing");
       await addDoc(collection(db, "Orders"), {
         userId: userId,
         dish: items.cartItems,
@@ -164,8 +165,9 @@ function OrderSummary({ menuCards }) {
                   </Text>
                 </View>
                 <View style={{ marginHorizontal: 30 }}>
-                  <TouchableOpacity onPress={payment}>
-                    <Text style={styles.checkoutButton}>PAY</Text>
+                  <TouchableOpacity onPress={() => {payment,  navigation.navigate("OrderPreparing" , totalPrice ); }}>
+                  {/* <TouchableOpacity onPress={navigation.navigate("OrderPreparing") }> */}
+                    <Text style={styles.checkoutButton} >PAY</Text>
                   </TouchableOpacity>
                 </View>
               </View>

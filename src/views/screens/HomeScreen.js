@@ -112,7 +112,7 @@ const HomeScreen = ({navigation , user}) => {
               <View style={style.categoryBtnImgCon}>
                 <Image
                   source={category.Image}
-                  style={{height: 35, width: 35, resizeMode: 'cover' , borderRadius:"5px"}}
+                  style={{height: 35, width: 35, resizeMode: 'cover' , borderRadius:5}}
                 />
               </View>
               <Text
@@ -206,9 +206,9 @@ const HomeScreen = ({navigation , user}) => {
               <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
                 {menuCards.Name}
               </Text>
-              <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}>
-                {menuCards.Intro}
-              </Text>
+              {/* <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}> */}
+                {/* {menuCards.Intro} */}
+              {/* </Text> */}
             </View>
   
             <View
@@ -250,12 +250,15 @@ const HomeScreen = ({navigation , user}) => {
   
   return (
     //this is the very top of the home screen .
+    <ScrollView>
+
+   
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <View style={style.header}>
         <View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 28}}>Hello,</Text>
-            <Text style={{fontSize: 28, fontWeight: 'bold', marginLeft: 10}}>
+            <Text style={{fontSize: 20}}>Hello,</Text>
+            <Text style={{fontSize: 20, fontWeight: 'bold', marginLeft: 10}}>
               Kgomotso
             </Text>
           </View>
@@ -297,7 +300,9 @@ const HomeScreen = ({navigation , user}) => {
         data={menuCards}
         renderItem={({item}) => <Card menuCards={item} navigation={navigation}/>}
       />
+      
     </SafeAreaView>
+    </ScrollView>
   );
 };
 const {width} = Dimensions.get('window'); //specifies the type of window opened , different from screen
@@ -307,7 +312,7 @@ const style = StyleSheet.create({
   
 
   header: {
-    marginTop: 20,
+    marginTop: 40,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
