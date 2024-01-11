@@ -13,6 +13,7 @@ const CartScreen = () => {
 
 
   const [menuCards , setMenuCards]=useState([]);
+  // console.log(menuCards)
  
   const [numericPrices , setNumericPrices]=useState([])
   const [totalPrice , setTotalPrice]=useState(0)
@@ -61,6 +62,12 @@ const CartScreen = () => {
     getItems()
 
   },[])
+
+
+  useEffect(()=>{
+  console.log(menuCards)  
+  },[menuCards])
+
 
 
   const incrementQuantity = (index)=>{

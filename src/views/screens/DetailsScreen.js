@@ -71,6 +71,7 @@ const DetailsScreen = ({ route }) => {
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Details</Text>
       </View>
+     
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
@@ -126,10 +127,10 @@ const DetailsScreen = ({ route }) => {
 const style = StyleSheet.create({
   header: {
     paddingVertical: 20,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginHorizontal: 20,
-    //  position: "absolute"
+    marginTop: 20,
   },
   details: {
     paddingHorizontal: 20,
