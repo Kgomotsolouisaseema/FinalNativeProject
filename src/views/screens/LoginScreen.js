@@ -27,7 +27,7 @@ const LoginScreen = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password).then(() => {
         console.log('Login Success');
-        Alert.alert("Welcome ")
+        Alert.alert("Welcome Back ")
         navigation.navigate('Home');
       });
     } catch (error) {

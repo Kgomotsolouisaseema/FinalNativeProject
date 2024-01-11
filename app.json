@@ -25,6 +25,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0ab1efb9-3989-4cab-b730-a6932f8e1a07"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/0ab1efb9-3989-4cab-b730-a6932f8e1a07"
+    },
+    "owner": "kgomotsodev"
   }
 }
