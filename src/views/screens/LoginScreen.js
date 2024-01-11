@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import COLORS from '../consts/Colors';
@@ -27,6 +27,7 @@ const LoginScreen = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password).then(() => {
         console.log('Login Success');
+        Alert.alert("Welcome ")
         navigation.navigate('Home');
       });
     } catch (error) {

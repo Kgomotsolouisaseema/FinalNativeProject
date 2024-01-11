@@ -7,9 +7,10 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-
+import { useStripe } from "@stripe/stripe-react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../consts/Colors";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -21,10 +22,13 @@ function OrderSummary({ menuCards }) {
   const [userCardDetails, setUserCardDetails] = useState(null);
   const [expDate, setExpDate] = useState();
   const [cvC, setCvcNum] = useState();
-
+  const stripe = useStripe();
   const params  = useRoute();
   const totalPrice= params.params || 0;
-  console.log("price ", totalPrice)
+
+  const [loading , setLoading]=useState(false);
+
+  // console.log("price ", userCardDetails)
 
   useEffect(() => {
     // Function to fetch user's card details from Firestore
@@ -50,29 +54,16 @@ function OrderSummary({ menuCards }) {
   }, []);
 
 
-//   const tokenizeCard = async () => {
-//     try {
-//         const cardDetails = {
-//             number: '4242424242424242', // Replace with the actual card number
-//             expMonth: 12, // Replace with the actual expiration month
-//             expYear: 25, // Replace with the actual expiration year
-//             cvc: '123', // Replace with the actual CVC
-//         };
-//         const cardToken = await stripe.createTokenWithCard(cardDetails);
-//         // The cardToken contains the tokenized card information
-//         console.log(cardToken);
-//     } catch (error) {
-//         console.error('Error tokenizing card:', error);
-//     }
-// }
+
   const payment = async () => {
-    //  navigation.navigate("OrderPreparing" , {totalPrice: totalPrice});
+    setLoading(true);
     try {
       // Sending request to server on render.com
       const response = await fetch("https://tinys-7lwb.onrender.com/pay", {
+        // const response = await fetch("https://localhost:8000/pay", {
         method: "POST",
         body: JSON.stringify({
-          name,
+          name:"kgomotso",
           amount: Math.floor(totalPrice * 100),
         }),
         headers: {
@@ -83,6 +74,7 @@ function OrderSummary({ menuCards }) {
       if (!response.ok) return Alert.alert(data.message);
       const clientSecret = data.clientSecret;
       const initSheet = await stripe.initPaymentSheet({
+        merchantDisplayName: "kgomotso",
         paymentIntentClientSecret: clientSecret,
       });
       if (initSheet.error) return Alert.alert(initSheet.error.message);
@@ -91,16 +83,12 @@ function OrderSummary({ menuCards }) {
       });
       if (presentSheet.error) return Alert.alert(presentSheet.error.message);
       Alert.alert("Payment complete, thank you!");
-      // navigation.navigate("OrderPreparing");
-      await addDoc(collection(db, "Orders"), {
-        userId: userId,
-        dish: items.cartItems,
-        total: total,
-        
-      });
+      navigation.navigate("OrderPreparing" , totalPrice );
       console.log("Order captured successfully");
     } catch (err) {
       console.log("Order not captured to database", err);
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -110,14 +98,14 @@ function OrderSummary({ menuCards }) {
         {/* Header Section */}
         <View style={styles.header}>
           <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>OrderSummary</Text>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Order Summary</Text>
         </View>
         <View>
           {userCardDetails && (
             <View style={styles.card}>
               <Text  style={styles.cardText}>User's Card Details:</Text>
-              <Text  style={styles.cardText}>Card Number: {userCardDetails.name}</Text>
-              <Text style={styles.cardText}>Card Surname: {userCardDetails.surname}</Text>
+              <Text  style={styles.cardText}>Customer Name: {userCardDetails.name}</Text>
+              <Text style={styles.cardText}>Customer Surname: {userCardDetails.surname}</Text>
               <Text  style={styles.cardText}>Card Details : {userCardDetails.cardDetails}</Text>
               <TextInput
                style={styles.input}
@@ -165,9 +153,13 @@ function OrderSummary({ menuCards }) {
                   </Text>
                 </View>
                 <View style={{ marginHorizontal: 30 }}>
-                  <TouchableOpacity onPress={() => {payment,  navigation.navigate("OrderPreparing" , totalPrice ); }}>
-                  {/* <TouchableOpacity onPress={navigation.navigate("OrderPreparing") }> */}
-                    <Text style={styles.checkoutButton} >PAY</Text>
+                  {/* <TouchableOpacity onPress={() => {payment,  navigation.navigate("OrderPreparing" , totalPrice ); }}> */}
+                  <TouchableOpacity onPress={payment}>
+                    {loading ? (
+                      <ActivityIndicator size="xlarge" color="#f93a6d" /> 
+                    ):(
+                      <Text style={styles.checkoutButton} >PAY</Text>
+                    )}
                   </TouchableOpacity>
                 </View>
               </View>
@@ -184,6 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginHorizontal: 20,
+    marginTop: 20,
     backgroundColor: COLORS.white,
   },
   checkoutButton: {

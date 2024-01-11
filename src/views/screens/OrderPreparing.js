@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   SafeAreaView,
@@ -14,7 +14,16 @@ import { ScrollView } from "react-native-gesture-handler";
 function OrderPreparing({ navigation }) {
   const params = useRoute();
   const thetotalPrice = params.params;
-  console.log("price ", thetotalPrice);
+  // console.log("price ", thetotalPrice);
+
+const [showTick , setShowTick]=useState(false);
+
+useEffect(()=>{
+  const timer = setTimeout(()=>{
+    setShowTick(true);
+  },5000)
+  return ()=> clearTimeout(timer)
+},[])
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
@@ -29,19 +38,25 @@ function OrderPreparing({ navigation }) {
 
           {/*Order Details or Summary */}
           <View style={styles.orderDetails}>
-            <Text>Order Number: TINY001</Text>
-            <Text>Total Price :R {thetotalPrice}</Text>
+            <Text  style={{fontSize: 15, fontWeight: 'bold', marginLeft: 10}}>Order Number: TINY001</Text>
+             <Text  style={{fontSize: 15, fontWeight: 'bold', marginLeft: 10}}>Total Price :R {thetotalPrice }</Text>
+            {/* <Text>Total Price :R {thetotalPrice.toFixed(2) }</Text> */}
           </View>
 
           {/*Order Status Update */}
           <View style={styles.statusUpdate}>
-            <ActivityIndicator size="large" color="#f93a6d" />
-            <Text>We are Finalizing your Order .... </Text>
+          <>
+      {!showTick ? (
+        <ActivityIndicator size="large" color="#f93a6d" />
+      ) : (
+        <Text style={{fontSize: 25, fontWeight: 'bold', marginLeft: 10}}>Tinys Kota Thanks you  !!</Text>
+      )}
+    </>
           </View>
           {/*Further Action  */}
           <View style={styles.actionButtons}>
             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-              <Text>Continue Shopping</Text>
+              <Text style={{fontSize: 15, fontWeight: 'bold', marginLeft: 5 , flexDirection:"column"}}>Continue Shopping</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -55,11 +70,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 250,
   },
   confrimationText: {
     marginBottom: 20,
@@ -67,6 +83,7 @@ const styles = StyleSheet.create({
   },
   orderDetails: {
     marginBottom: 20,
+    
   },
   statusUpdate: {
     alignItems: "center",

@@ -59,12 +59,6 @@ export default function App() {
           <Stack.Screen name="Orders" component={OrderSummary} />
           <Stack.Screen name="OrderPreparing" component={OrderPreparing} />
           <Stack.Screen name="PaymentDetails" component={PaymentDetails} />
-         
-         
-
-
-
-
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

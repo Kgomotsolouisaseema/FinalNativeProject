@@ -203,12 +203,12 @@ const HomeScreen = ({navigation , user}) => {
             <Image source={{ uri: menuCards.Image }} style={style.cardImage} />
             {/* Rest of your content */}
             <View style={{ marginHorizontal: 20 }}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+              <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
                 {menuCards.Name}
               </Text>
-              {/* <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}> */}
-                {/* {menuCards.Intro} */}
-              {/* </Text> */}
+              <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}> 
+                {menuCards.Intro} 
+               </Text>
             </View>
   
             <View
@@ -219,7 +219,7 @@ const HomeScreen = ({navigation , user}) => {
                 justifyContent: 'space-between',
               }}
             >
-              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold',marginRight:18 }}>
                 R{menuCards.Price}
               </Text>
               <View style={style.addToCartBtnContainer}>
@@ -236,7 +236,7 @@ const HomeScreen = ({navigation , user}) => {
                     });
                   }}
                 >
-                  <Icon name="add" size={20} color={COLORS.white} />
+                  <Icon name="add" size={20} color={COLORS.white}  />
                 </TouchableOpacity>
               </View>
             </View>
@@ -257,8 +257,8 @@ const HomeScreen = ({navigation , user}) => {
       <View style={style.header}>
         <View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize: 20}}>Hello,</Text>
-            <Text style={{fontSize: 20, fontWeight: 'bold', marginLeft: 10}}>
+            <Text style={{fontSize: 25}}>Hello,</Text>
+            <Text style={{fontSize: 25, fontWeight: 'bold', marginLeft: 10}}>
               Kgomotso
             </Text>
           </View>
@@ -269,7 +269,7 @@ const HomeScreen = ({navigation , user}) => {
         <Image
           source={require('../assets/frontgirl.png')}
           // source={{ uri: user.profilePicture }}
-          style={{height: 50, width: 50, borderRadius: 25}}
+          style={{height: 55, width: 55, borderRadius: 25}}
         />
       </View>
       <View

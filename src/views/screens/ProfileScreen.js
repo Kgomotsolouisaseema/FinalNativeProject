@@ -15,42 +15,50 @@ import { getDoc, doc, getFirestore , updateDoc  } from "firebase/firestore";
 import { getAuth , onAuthStateChanged } from "firebase/auth";
 import COLORS from "../consts/Colors";
 import { PrimaryButton } from "../components/Button";
+import { ScrollView } from "react-native-gesture-handler";
 
 const ProfileScreen = ({navigation}) => {
   const { width } = Dimensions.get("window");
   const cardWidth = width / 2 - 20;
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(0);
   console.log("Profile screen users" , user)
   const auth = getAuth();
   const db = getFirestore();
 
-  useEffect(() => {
-    // Fetch user details from Firebase and set in userDetails state
-    const unsubscribe = onAuthStateChanged(auth , (user) => {
-      if (user) {
-        // User is signed in, fetch user details
-        // Update userDetails state with fetched user details
-      }else{
-        Alert.alert("Welcome back :",user ,"Have a Happy Meal")
-      }
-    });
+  // useEffect(() => {
+  //   // Fetch user details from Firebase and set in userDetails state
+  //   const unsubscribe = onAuthStateChanged(auth , (user) => {
+  //     if (user) {
+  //       // User is signed in, fetch user details
+  //       // Update userDetails state with fetched user details
+  //     }else{
+  //       Alert.alert("Welcome back :",user ,"Have a Happy Meal")
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe(); //on component will unmount/clean /react lifecycles
+  // }, []);
 
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const user = auth.currentUser;
-        if (user) {
-          const userDocRef = doc(db, "users", user.uid); 
-          const userDocSnapshot = await getDoc(userDocRef);
-          if (userDocSnapshot.exists()) {
-            setUser(userDocSnapshot.data());
+        // const user = auth.currentUser;
+        const user = onAuthStateChanged(auth,async (user)=>{
+          console.log({ user })
+
+          if (user) {
+            const userDocRef = doc(db, "users", user.uid); 
+            const userDocSnapshot = await getDoc(userDocRef);
+            if (userDocSnapshot.exists()) {
+              setUser(userDocSnapshot.data());
+            }
           }
-        }
+
+        })
+        console.log(user)
+       
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -68,9 +76,11 @@ const ProfileScreen = ({navigation}) => {
   const handleLogout = async () => {
     try {
       await auth.signOut(); // Sign the user out
-      // Redirect the user to the onboarding screen
-      navigation.navigate('Onboarding');
+     
       console.log("User logged out successfully");
+      Alert.alert("Thank you , See you  later")
+       // Redirect the user to the onboarding screen
+      navigation.navigate('BoardScreen');
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -78,17 +88,23 @@ const ProfileScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-      <View style={styles.profileContainer}>
-        {/* <Image
+        <View style={styles.header}>
+        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
+        <Text style={{fontSize: 20, fontWeight: 'bold'}}> Profile Screen</Text>
+      </View>
+     
+      <ScrollView> 
+       <View style={styles.profileContainer}>
+         <Image
           source={{ uri: user.profilePicture }}
           style={styles.profileImage}
-        /> */}
-         <Image
+        /> 
+          <Image
           source={require('../assets/frontgirl.png')}
           style={styles.profileImage}
-        />
+        /> 
 
-        <Text style={styles.userName}>{`${user.name} ${user.surname}`}</Text>
+         <Text style={styles.userName}>{`${user.name} ${user.surname}`}</Text>
         <Text style={styles.userEmail}>{user.email}</Text>
       </View>
       <View style={styles.infoContainer}>
@@ -114,7 +130,7 @@ const ProfileScreen = ({navigation}) => {
       ):(
         <Text>No order history Available</Text>
       )}
-      {/* Render order history here based on user.orders */}
+      
 
       </View>
      
@@ -124,6 +140,7 @@ const ProfileScreen = ({navigation}) => {
               <PrimaryButton title="LOGOUT" onPress={handleLogout} />
             </View>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

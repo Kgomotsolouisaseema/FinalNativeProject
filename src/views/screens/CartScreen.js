@@ -108,8 +108,9 @@ const CartScreen = () => {
 
     return (
       <View style={styles.cartCard}>
-        <Image source={{ uri: item.image}} style={{ height: 80, width: 80 }} />
-        <View style={{ height: 100, marginLeft: 10, paddingVertical: 20, flex: 1 }}>
+        <Image source={{ uri: item.image}} style={{ height: 90, width: 80 ,overflow:"hidden" ,borderRadius:8,}} />
+        {/* <View style={{ height: 100, marginLeft: 10, paddingVertical: 20, flex: 1 }}> */}
+        <View style={{ marginLeft: 10, paddingVertical: 20, flex: 1 }}>
           <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{item.productName}</Text>
           <Text style={{ fontSize: 13, color: COLORS.grey }}>{item.Intro}</Text>
           <Text style={{ fontSize: 17, fontWeight: 'bold' }}>R{item.price}</Text>
@@ -182,9 +183,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 20,
+    marginTop: 20,
   },
   cartCard: {
-    height: 100,
+    // height: 130,
     elevation: 15,
     borderRadius: 10,
     backgroundColor: COLORS.white,
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderwidth: 5, // border
-    borderColor: "black",
+    borderColor: COLORS.primary,
    
 
   },
